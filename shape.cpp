@@ -84,12 +84,42 @@ square::square (GLfloat width): rectangle (width, width) {
    DEBUGF ('c', this);
 }
 
+diamond::diamond(GLfloat width, GLfloat height) {
+   DEBUGF ('c', this << "(" << width << "," << height << ")");
+   vertex_list vList;
+   vertex v = {width/2, height/2};
+   vList.push_back(v);
+   v = {width-width, height-height};
+   vList.push_back(v);
+   v = {width/2, -height/2};
+   vList.push_back(v);
+   v = {width, height-height};
+   vList.push_back(v);
+   polygon(vList);
+
+}
+
+triangle::triangle (const vertex_list& vertices) : vertices(vertices) {
+   DEBUGF ('c', this);
+}
+
+
+
 // Wrong, presumptively convex polygon, not sure what OpenGL does
 // when it's non-convex polygon.
 void text::draw (const vertex& center, const rgbcolor& color) const {
    DEBUGF ('d', this << "(" << center << "," << color << ")");
-
+   glClearColor (0.2, 0.2, 0.2, 1.0);
+   glClear (GL_COLOR_BUFFER_BIT);
+   //auto text = reinterpret_cast<const GLubyte*> (window.text.c_str());
+   size_t width = glutBitmapLength (glut_bitmap_font, textdata);
+   size_t height = glutBitmapHeight (glut_bitmap_font);
    glColor3ubv(color.ubvec3());
+   //float xpos = window.width / 2.0 - width / 2.0;
+   //float ypos = window.height / 2.0 - height / 2.0;
+   glRasterPos2f (center.xpos, center.ypos);
+   glutBitmapString (glut_bitmap_font, textdata);
+   glutSwapBuffers();
 }
 
 // See ellipse.cpp, points u use should be power of 4, then
@@ -113,6 +143,15 @@ void ellipse::draw (const vertex& center, const rgbcolor& color) const {
 // center is defined in polygon constructor, (avg. of x, avg., of y)
 void polygon::draw (const vertex& center, const rgbcolor& color) const {
    DEBUGF ('d', this << "(" << center << "," << color << ")");
+   glBegin (GL_POLYGON);
+   glColor3ubv (color.ubvec3());
+   for (auto& i : vertices)
+   {
+      glVertex2f (center.xpos + i.xpos, center.ypos + i.ypos);
+   }
+
+   glEnd();
+
 }
 
 // DEBUG

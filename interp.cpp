@@ -123,14 +123,14 @@ shape_ptr interpreter::make_ellipse (param begin, param end) {
    DEBUGF ('f', range (begin, end));
    GLfloat width = *begin++;
    GLfloat height = *begin;
-   return make_shared<ellipse> (GLfloat(), GLfloat());
+   return make_shared<ellipse> (width, height);
 }
 
 // Need to changed.
 shape_ptr interpreter::make_circle (param begin, param end) {
    DEBUGF ('f', range (begin, end));
    GLfloat diameter = *begin;
-   return make_shared<circle> (GLfloat());
+   return make_shared<circle> (diameter);
 }
 
 // Need to changed.
@@ -149,7 +149,7 @@ shape_ptr interpreter::make_polygon (param begin, param end) {
       vertexList.push_back(v);
 
    }
-   return make_shared<polygon> (vertex_list());
+   return make_shared<polygon> (vertexList);
 }
 
 // Need to changed.
@@ -157,14 +157,23 @@ shape_ptr interpreter::make_rectangle (param begin, param end) {
    DEBUGF ('f', range (begin, end));
    GLfloat width = *begin++;
    GLfloat height = *begin;
-   return make_shared<rectangle> (GLfloat(), GLfloat());
+   return make_shared<rectangle> (width, height);
 }
 
 // Need to changed.
 shape_ptr interpreter::make_square (param begin, param end) {
    DEBUGF ('f', range (begin, end));
    GLfloat width = *begin;
-   return make_shared<square> (GLfloat());
+   return make_shared<square> (width);
+}
+
+// make_diamond
+shape_ptr interpreter::make_diamond  (param begin, param end) {
+   DEBUGF ('f', range (begin, end));
+   GLfloat width = *begin++;
+   GLfloat height = *begin;
+   return make_shared<rectangle> (width, height);
+
 }
 
 // make_triangle:
@@ -182,6 +191,6 @@ shape_ptr interpreter::make_triangle () {
       vertexList.push_back(v);
 
    }
-   return make_shared<polygon> (vertex_list());
+   return make_shared<triangle> (vertexList);
 }
 // throw a range error if passed in arguments are not 6.

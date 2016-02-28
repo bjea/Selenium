@@ -116,6 +116,7 @@ class polygon: public shape {
    protected:
       const vertex_list vertices;
    public:
+      polygon();
       polygon (const vertex_list& vertices);
       virtual void draw (const vertex&, const rgbcolor&) const override;
       virtual void show (ostream&) const override;
@@ -140,7 +141,12 @@ class square: public rectangle {
 class diamond: public polygon {
    public:
     // height == top vertex to bottom vertex.
-      diamond (const GLfloat width, const GLfloat height);
+      diamond (GLfloat width, GLfloat height);
+};
+
+class triangle : public polygon {
+   public:
+      triangle (const vertex_list& vertices);
 };
 
 ostream& operator<< (ostream& out, const shape&);
