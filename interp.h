@@ -12,6 +12,7 @@ using namespace std;
 #include "graphics.h"
 #include "shape.h"
 
+// At the eof, draw() happens.
 class interpreter {
    public:
       using shape_map = unordered_map<string,shape_ptr>;
@@ -26,16 +27,20 @@ class interpreter {
       interpreter (const interpreter&) = delete;
       interpreter& operator= (const interpreter&) = delete;
 
+    // A ptr to a fnc. that takes 2 params.
       using interpreterfn = void (*) (param, param);
       using factoryfn = shape_ptr (*) (param, param);
+   // make_shared<T>
 
       static unordered_map<string,interpreterfn> interp_map;
       static unordered_map<string,factoryfn> factory_map;
       static shape_map objmap;
 
       static void do_define (param begin, param end);
-      static void do_draw (param begin, param end);
+      static void do_draw (param begin, param end); // Called
+    // from graphics.cpp.
 
+    // Have tp ne static
       static shape_ptr make_shape (param begin, param end);
       static shape_ptr make_text (param begin, param end);
       static shape_ptr make_ellipse (param begin, param end);
@@ -44,6 +49,7 @@ class interpreter {
       static shape_ptr make_rectangle (param begin, param end);
       static shape_ptr make_square (param begin, param end);
       static shape_ptr make_line (param begin, param end);
+      static shape_ptr make_triangle (param begin, param end);
 };
 
 #endif

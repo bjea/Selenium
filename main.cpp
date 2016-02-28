@@ -1,4 +1,9 @@
 // $Id: main.cpp,v 1.1 2015-07-16 16:47:51-07 - - $
+// See showtext.cpp in opengl-examples dir to see
+// glutBitmapString (window.font, text);
+// See ellipses.cpp in opengl-examples dir to see
+// See triangle.cpp in opengl-examples dir to see,
+// glbegin(GL_TRIANGLE), or your can use (GL_POLYGON).
 
 #include <fstream>
 #include <iostream>
@@ -16,6 +21,8 @@ using namespace std;
 // and interpret the command.
 //
 
+// parsefile can take by ref., not const. ref. We can't copy,
+// assign, or move file obj., but parsefile can take by ref.
 void parsefile (const string& infilename, istream& infile) {
    interpreter::shape_map shapemap;
    interpreter interp;

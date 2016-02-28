@@ -30,11 +30,14 @@ using namespace std;
 //          isosceles
 //          equilateral
 //
+// No ellipse in OpenGL, so we need to write a function to draw
+// it. Basically, it's a whole bunch of vertices connecting
+// together to deceive human eyes.
 
 class shape;
 struct vertex {GLfloat xpos; GLfloat ypos; };
 using vertex_list = vector<vertex>;
-using shape_ptr = shared_ptr<shape>; 
+using shape_ptr = shared_ptr<shape>; // a vector of vertices
 
 //
 // Abstract base class for all shapes in this system.
@@ -43,15 +46,19 @@ using shape_ptr = shared_ptr<shape>;
 class shape {
    friend ostream& operator<< (ostream& out, const shape&);
    private:
+    // The following 4 can all be under "public".
       shape (const shape&) = delete; // Prevent copying.
       shape& operator= (const shape&) = delete; // Prevent copying.
       shape (shape&&) = delete; // Prevent moving.
       shape& operator= (shape&&) = delete; // Prevent moving.
    protected:
+    // It's OK to be in "public" b/c u can't instantiate it unless
       inline shape(); // Only subclass may instantiate.
    public:
       virtual ~shape() {}
       virtual void draw (const vertex&, const rgbcolor&) const = 0;
+    // show() for debugging purposes,  x.show (cout) meaning
+    // cout << x.
       virtual void show (ostream&) const;
 };
 
@@ -59,10 +66,10 @@ class shape {
 //
 // Class for printing text.
 //
-
+// Figure out and override each of the functions.
 class text: public shape {
    protected:
-      void* glut_bitmap_font = nullptr;
+      void* glut_bitmap_font = nullptr; // Default: nullptr.
       // GLUT_BITMAP_8_BY_13
       // GLUT_BITMAP_9_BY_15
       // GLUT_BITMAP_HELVETICA_10
@@ -72,6 +79,10 @@ class text: public shape {
       // GLUT_BITMAP_TIMES_ROMAN_24
       string textdata;
    public:
+    // Default constructor
+    // We don't need destructor herre, b/c void* is not pointing to
+    // data, it's pointing to static data, and never delete static
+    // data.
       text (void* glut_bitmap_font, const string& textdata);
       virtual void draw (const vertex&, const rgbcolor&) const override;
       virtual void show (ostream&) const override;
@@ -93,6 +104,8 @@ class ellipse: public shape {
 class circle: public ellipse {
    public:
       circle (GLfloat diameter);
+    // We don't override draw or show, b/c the way u draw a circle is
+    // the way u draw an ellipse.
 };
 
 //
@@ -111,6 +124,7 @@ class polygon: public shape {
 
 //
 // Classes rectangle, square, etc.
+// Add triangle, etc.
 //
 
 class rectangle: public polygon {
@@ -125,6 +139,7 @@ class square: public rectangle {
 
 class diamond: public polygon {
    public:
+    // height == top vertex to bottom vertex.
       diamond (const GLfloat width, const GLfloat height);
 };
 

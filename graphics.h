@@ -12,6 +12,8 @@ using namespace std;
 #include "rgbcolor.h"
 #include "shape.h"
 
+// shape is just
+// object is the real thing that appears in the window.
 class object {
    private:
       shared_ptr<shape> pshape;
@@ -19,6 +21,8 @@ class object {
       rgbcolor color;
    public:
       // Default copiers, movers, dtor all OK.
+    // we have object draw() and shape draw (pshape->draw),
+      // which is l
       void draw() { pshape->draw (center, color); }
       void move (GLfloat delta_x, GLfloat delta_y) {
          center.xpos += delta_x;
@@ -26,11 +30,13 @@ class object {
       }
 };
 
+// Merely for entertainment, not of much use in this project.
 class mouse {
       friend class window;
    private:
       int xpos {0};
       int ypos {0};
+    // mouse has entered the window.
       int entered {GLUT_LEFT};
       int left_state {GLUT_UP};
       int middle_state {GLUT_UP};
@@ -43,7 +49,9 @@ class mouse {
 
 
 class window {
-      friend class mouse;
+      friend class mouse; // friend: 1-way relationship,
+    // mouse can look at the private members of window,
+    // but not vice versa.
    private:
       static int width;         // in pixels
       static int height;        // in pixels
@@ -51,6 +59,9 @@ class window {
       static size_t selected_obj;
       static mouse mus;
    private:
+    // All are functions written in C, which can only be called
+    // by .... Static functions in header files have to be ...
+    // in .cpp files.
       static void close();
       static void entry (int mouse_entered);
       static void display();
@@ -67,6 +78,8 @@ class window {
       static void setheight (int height_) { height = height_; }
       static void main();
 };
+
+// See keyboard.cpp in opengl.examples
 
 #endif
 

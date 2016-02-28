@@ -92,6 +92,7 @@ void window::keyboard (GLubyte key, int x, int y) {
 
 
 // Executed when a special function key is pressed.
+// Ignore this one in this project.
 void window::special (int key, int x, int y) {
    DEBUGF ('g', "key=" << key << ", x=" << x << ", y=" << y);
    window::mus.set (x, y);
@@ -119,7 +120,7 @@ void window::special (int key, int x, int y) {
    glutPostRedisplay();
 }
 
-
+// 2 kinds of mouse motion
 void window::motion (int x, int y) {
    DEBUGF ('g', "x=" << x << ", y=" << y);
    window::mus.set (x, y);
@@ -140,6 +141,11 @@ void window::mousefn (int button, int state, int x, int y) {
    glutPostRedisplay();
 }
 
+// x increases when moving rightward while y increases when
+// moving downward,
+// which is the same as that in webpages. "Press" and
+// "release" keys are 2 different actions though "release"
+// is often ignored.
 void window::main () {
    static int argc = 0;
    glutInit (&argc, nullptr);
@@ -157,10 +163,11 @@ void window::main () {
    glutPassiveMotionFunc (window::passivemotion);
    glutMouseFunc (window::mousefn);
    DEBUGF ('g', "Calling glutMainLoop()");
-   glutMainLoop();
+   glutMainLoop(); // which never returns until u kill
+   // the program.
 }
 
-
+// This one is working, don't change it.
 void mouse::state (int button, int state) {
    switch (button) {
       case GLUT_LEFT_BUTTON: left_state = state; break;
@@ -169,6 +176,7 @@ void mouse::state (int button, int state) {
    }
 }
 
+// This one is working, don't change it.
 void mouse::draw() {
    static rgbcolor color ("green");
    ostringstream text;
@@ -180,6 +188,9 @@ void mouse::draw() {
       void* font = GLUT_BITMAP_HELVETICA_18;
       glColor3ubv (color.ubvec);
       glRasterPos2i (10, 10);
+      // cast it to a Glubyte* b/c it's either signed char or
+      // unsigned char, depending on compiler, so we need to
+      // cast it. However, it's better to use static cast.
       glutBitmapString (font, (GLubyte*) text.str().c_str());
    }
 }

@@ -13,6 +13,10 @@ using namespace std;
 
 #include "colors.cppgen"
 
+// Constructor, passed in a color name,
+// copy this file, "/usr/share/X11/rgb.txt", on UNIX to .cppgen,
+// and modify the Makefile.
+//
 rgbcolor::rgbcolor (const string& name) {
    auto entry = color_names.find (name);
    if (entry != color_names.end()) {
@@ -33,8 +37,10 @@ rgbcolor::rgbcolor (const string& name) {
 rgbcolor::operator string() const {
    ostringstream result;
    result << "0x"
+   // hex: print in hexadecimal, uppercase just to look better.
           << hex << setiosflags (ios::uppercase) << setfill ('0')
           << setw(2) << static_cast<unsigned> (red)
+   // unsigned: otherwise, it may interpret 65 as 'A'.
           << setw(2) << static_cast<unsigned> (green)
           << setw(2) << static_cast<unsigned> (blue);
    return result.str();
