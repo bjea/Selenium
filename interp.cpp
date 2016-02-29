@@ -145,12 +145,10 @@ shape_ptr interpreter::make_polygon (param begin, param end) {
    {
       vertex v;
       size_t idx = 0;
-      v.xpos = stod(*begin, &idx);
-      begin++;
+      v.xpos = stod(*begin++, &idx);
       v.ypos = stod(*begin, &idx);
       vertexList.push_back(v);
    }
-   cout<<"end of polygon"<<endl;
    return make_shared<polygon> (vertexList);
 }
 
