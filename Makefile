@@ -17,8 +17,8 @@ OTHERS      = ${MKFILE} README mk-colors.perl
 ALLSOURCES  = ${CPPHEADER} ${TEMPLATES} ${CPPSOURCE} ${OTHERS}
 EXECBIN     = gdraw
 OBJECTS     = ${CPPSOURCE:.cpp=.o}
-LINKLIBS    = -framework OpenGL -framework GLUT -lGLU -lglut -lm
-#LINKLIBS    = -lGL -lGLU -lglut -lm
+#LINKLIBS    = -framework OpenGL -framework GLUT -lGLU -lglut -lm
+LINKLIBS    = -lGL -lGLU -lglut -lm
 
 
 LISTING     = Listing.ps
