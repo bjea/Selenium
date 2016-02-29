@@ -23,6 +23,8 @@ class object {
       // Default copiers, movers, dtor all OK.
     // we have object draw() and shape draw (pshape->draw),
       // which is l
+      object (shared_ptr<shape> ps, vertex c, rgbcolor col):
+         pshape(ps), center(c), color(col) {}
       void draw() { pshape->draw (center, color); }
       void move (GLfloat delta_x, GLfloat delta_y) {
          center.xpos += delta_x;
@@ -30,7 +32,8 @@ class object {
       }
 };
 
-// Merely for entertainment, not of much use in this project.
+// Merely for entertainment, not of much use in
+// this project.
 class mouse {
       friend class window;
    private:

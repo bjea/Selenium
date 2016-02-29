@@ -83,7 +83,9 @@ class text: public shape {
     // We don't need destructor herre, b/c void* is not pointing to
     // data, it's pointing to static data, and never delete static
     // data.
+      text();
       text (void* glut_bitmap_font, const string& textdata);
+      void* findFont (string font);
       virtual void draw (const vertex&, const rgbcolor&) const override;
       virtual void show (ostream&) const override;
 };
