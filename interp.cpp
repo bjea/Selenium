@@ -148,7 +148,6 @@ shape_ptr interpreter::make_polygon (param begin, param end) {
       v.xpos = stod(*begin, &idx);
       begin++;
       v.ypos = stod(*begin, &idx);
-      begin++;
       vertexList.push_back(v);
    }
    cout<<"end of polygon"<<endl;
