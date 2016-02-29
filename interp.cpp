@@ -31,7 +31,7 @@ interpreter::factory_map {
    {"square"   , &interpreter::make_square   },
    {"diamond"  , &interpreter::make_diamond  },
    {"triangle" , &interpreter::make_triangle },
-   //{"equilateral"}
+   {"equilateral", &interpreter::make_equilateral},
 };
 
 interpreter::shape_map interpreter::objmap;
@@ -83,7 +83,8 @@ void interpreter::do_draw (param begin, param end) {
 
 shape_ptr interpreter::make_shape (param begin, param end) {
    DEBUGF ('f', range (begin, end));
-   string type = *begin++; // postfix ++ more expensive b/c it needs
+   string type = *begin++;
+   // postfix ++ more expensive b/c it needs
    // to create a copy of the obj., while prefix ++ does it
    // in-place. So here we can change it to "= *begin", then
    // return func (++begin, end).
@@ -109,7 +110,8 @@ shape_ptr interpreter::make_text (param begin, param end) {
       textdata += *begin;
       space = true;
    }
-   shared_ptr<text> t = make_shared<text> (t->findFont(font), textdata);
+   shared_ptr<text> t =
+           make_shared<text> (t->findFont(font), textdata);
    //text t;
    //text words (void* glut_bitmap_font, const string& textdata);
    //return make_shared<text> (nullptr, string());
@@ -190,9 +192,16 @@ shape_ptr interpreter::make_triangle (param begin, param end) {
       vertex v;
       size_t idx = 0;
       v.xpos = stod(*begin++, &idx);
-      v.ypos = stod(*begin++, &idx);
+      v.ypos = stod(*begin, &idx);
       vertexList.push_back(v);
    }
    return make_shared<triangle> (vertexList);
 }
 // throw a range error if passed in arguments are not 6.
+
+shape_ptr interpreter::make_equilateral (param begin, param end) {
+   DEBUGF ('f', range (begin, end));
+   size_t idx = 0;
+   GLfloat width = stod(*begin, &idx);
+   return make_shared<equilateral> (width);
+}

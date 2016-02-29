@@ -146,9 +146,14 @@ class diamond: public polygon {
       diamond (GLfloat width, GLfloat height);
 };
 
-class triangle : public polygon {
+class triangle: public polygon {
    public:
       triangle (const vertex_list& vertices);
+};
+
+class equilateral: public triangle {
+   public:
+      equilateral (GLfloat width);
 };
 
 ostream& operator<< (ostream& out, const shape&);

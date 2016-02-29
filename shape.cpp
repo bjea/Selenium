@@ -111,18 +111,23 @@ diamond::diamond(GLfloat width, GLfloat height): polygon({{width/2,
    vertices = vList;*/
 }
 
-triangle::triangle (const vertex_list& vertices): polygon(vertices) {
+triangle::triangle (const vertex_list& vertices):
+        polygon(vertices) {
    DEBUGF ('c', this);
 }
 
-
+equilateral::equilateral (GLfloat width): triangle ({
+   {width/2, -width*sqrt(3)/4}, {0.0f, width*sqrt(3)/4},
+   {-width/2, -width*sqrt(3)/4}}) {
+   DEBUGF ('c', this);
+}
 
 // Wrong, presumptively convex polygon, not sure what OpenGL does
 // when it's non-convex polygon.
 void text::draw (const vertex& center, const rgbcolor& color) const {
    DEBUGF ('d', this << "(" << center << "," << color << ")");
-   glClearColor (0.2, 0.2, 0.2, 1.0);
-   glClear (GL_COLOR_BUFFER_BIT);
+   //glClearColor (0.2, 0.2, 0.2, 1.0);
+   //glClear (GL_COLOR_BUFFER_BIT);
    //auto text = reinterpret_cast<const GLubyte*> (window.text.c_str());
    //size_t width = glutBitmapLength (glut_bitmap_font, textdata);
    //size_t height = glutBitmapHeight (glut_bitmap_font);
