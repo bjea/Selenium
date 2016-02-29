@@ -137,9 +137,9 @@ shape_ptr interpreter::make_circle (param begin, param end) {
 // throw a range error if passed in arguments are not 2x.
 shape_ptr interpreter::make_polygon (param begin, param end) {
    DEBUGF ('f', range (begin, end));
-   /*if (distance(begin, end) % 2) {
+   if (distance(begin, end) % 2) {
       throw runtime_error ("Number of vertices is odd.");
-   }*/
+   }
    vertex_list vertexList;
    for (; begin != end; ++begin)
    {
