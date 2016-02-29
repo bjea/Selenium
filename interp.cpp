@@ -151,6 +151,7 @@ shape_ptr interpreter::make_polygon (param begin, param end) {
       begin++;
       vertexList.push_back(v);
    }
+   cout<<"end of polygon"<<endl;
    return make_shared<polygon> (vertexList);
 }
 
