@@ -7,7 +7,7 @@
 #include <unordered_map>
 using namespace std;
 
-#include <OpenGL/freeglut.h>
+#include <GL/freeglut.h>
 
 // POD (Plain Old Data), so no ADT needed.
 struct rgbcolor {
