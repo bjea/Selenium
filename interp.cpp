@@ -119,17 +119,17 @@ shape_ptr interpreter::make_text (param begin, param end) {
 // Need to changed.
 shape_ptr interpreter::make_ellipse (param begin, param end) {
    DEBUGF ('f', range (begin, end));
-   size_t* idx = 0;
-   GLfloat width = stod(*begin++, idx);
-   GLfloat height = stod(*begin, idx);
+   size_t idx = 0;
+   GLfloat width = stod(*begin++, &idx);
+   GLfloat height = stod(*begin, &idx);
    return make_shared<ellipse> (width, height);
 }
 
 // Need to changed.
 shape_ptr interpreter::make_circle (param begin, param end) {
    DEBUGF ('f', range (begin, end));
-   size_t* idx = 0;
-   GLfloat diameter = stod(*begin, idx);
+   size_t idx = 0;
+   GLfloat diameter = stod(*begin, &idx);
    return make_shared<circle> (diameter);
 }
 
@@ -157,26 +157,26 @@ shape_ptr interpreter::make_polygon (param begin, param end) {
 // Need to changed.
 shape_ptr interpreter::make_rectangle (param begin, param end) {
    DEBUGF ('f', range (begin, end));
-   size_t* idx = 0;
-   GLfloat width = stod(*begin++, idx);
-   GLfloat height = stod(*begin, idx);
+   size_t idx = 0;
+   GLfloat width = stod(*begin++, &idx);
+   GLfloat height = stod(*begin, &idx);
    return make_shared<rectangle> (width, height);
 }
 
 // Need to changed.
 shape_ptr interpreter::make_square (param begin, param end) {
    DEBUGF ('f', range (begin, end));
-   size_t* idx = 0;
-   GLfloat width = stod(*begin, idx);
+   size_t idx = 0;
+   GLfloat width = stod(*begin, &idx);
    return make_shared<square> (width);
 }
 
 // make_diamond
 shape_ptr interpreter::make_diamond (param begin, param end) {
    DEBUGF ('f', range (begin, end));
-   size_t* idx = 0;
-   GLfloat width = stod(*begin++, idx);
-   GLfloat height = stod(*begin, idx);
+   size_t idx = 0;
+   GLfloat width = stod(*begin++, &idx);
+   GLfloat height = stod(*begin, &idx);
    return make_shared<rectangle> (width, height);
 }
 
@@ -190,9 +190,9 @@ shape_ptr interpreter::make_triangle (param begin, param end) {
    for (; begin != end; ++begin)
    {
       vertex v;
-      size_t* idx = 0;
-      v.xpos = stod(*begin++, idx);
-      v.ypos = stod(*begin++, idx);
+      size_t idx = 0;
+      v.xpos = stod(*begin++, &idx);
+      v.ypos = stod(*begin++, &idx);
       vertexList.push_back(v);
    }
    return make_shared<triangle> (vertexList);
