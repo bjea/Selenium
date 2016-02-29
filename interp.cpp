@@ -78,7 +78,7 @@ void interpreter::do_draw (param begin, param end) {
    // 2nd argument is the obj. itself, and we tell it to go draw
    // itself w/ where and color specified.
    //itor->second->draw (where, color);
-   window::push_back(object::object(itor->second, where, color));
+   window::push_back(object(itor->second, where, color));
 }
 
 shape_ptr interpreter::make_shape (param begin, param end) {
