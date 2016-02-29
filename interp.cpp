@@ -145,8 +145,10 @@ shape_ptr interpreter::make_polygon (param begin, param end) {
    {
       vertex v;
       size_t* idx = 0;
-      v.xpos = stod(*begin++, idx);
-      v.ypos = stod(*begin++, idx);
+      v.xpos = stod(*begin, idx);
+      begin++;
+      v.ypos = stod(*begin, idx);
+      begin++;
       vertexList.push_back(v);
    }
    return make_shared<polygon> (vertexList);
